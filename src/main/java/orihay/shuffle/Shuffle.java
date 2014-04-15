@@ -44,20 +44,15 @@ public class Shuffle {
   private static List<Card> merge(List<Card> first, List<Card> second, long seed) {
     int oneSize = 0;
     int twoSize = 0;
-    System.out.println(first.size() + "FIRST");
-    System.out.println(second.size() + "SECOND");
     ArrayList<Card> merged = new ArrayList<Card>();
     while (oneSize < first.size() || twoSize < second.size()) {
       if (oneSize == first.size()) {
         merged.addAll(second.subList(twoSize, second.size()));
         twoSize = second.size();
-        System.out.println("onesize" + merged);
       } else if (twoSize == second.size()) {
         merged.addAll(first.subList(oneSize, first.size()));
         oneSize = first.size();
-        System.out.println("twosize" + merged);
       } else {
-        System.out.println("one: " + oneSize + " two: " + twoSize);
         if (decide(seed)) {
           merged.add(first.get(oneSize));
           oneSize++;
@@ -65,7 +60,6 @@ public class Shuffle {
           merged.add(second.get(twoSize));
           twoSize++;
         }
-        System.out.println("merged size " + merged.size());
       }
     }
     return merged;
@@ -78,10 +72,8 @@ public class Shuffle {
     } else if (cards.size() == 1) {
       return cards;
     } else {
-      System.out.println("size " + cards.size());
       List<Card> first = cards.subList(0, floor);
       List<Card> second = cards.subList(floor, cards.size());
-      System.out.println("first: " + first.size() + " second: " + second.size());
       return merge(sort(first, seed), sort(second, seed), seed);
     }
   }
