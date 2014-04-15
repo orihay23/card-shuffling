@@ -22,6 +22,9 @@ public class Shuffle {
     list.add(S10);
     list.add(H11);
     list.add(S11);
+    Deck unshuffled = new Deck(list);
+    System.out.println("Unshuffled:");
+    unshuffled.print();
   }
 
   public static Deck withRand(Deck d, long seed) {
