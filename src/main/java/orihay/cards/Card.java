@@ -1,19 +1,23 @@
 package orihay.cards;
 
 public class Card {
-  private String suit;
-  private int rank;
+  private Suit suit;
+  private Rank rank;
 
-  public Card(String suit, int rank) {
+  public Card(Suit suit, Rank rank) {
     this.suit = suit;
     this.rank = rank;
   }
 
-  public String getSuit() {
+  public Suit getSuit() {
     return this.suit;
   }
 
-  public int getRank() {
+  public Rank getRank() {
     return this.rank;
+  }
+
+  public void print() {
+    System.out.println(rank.getLabel() + " of " + suit);
   }
 }

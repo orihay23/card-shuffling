@@ -16,4 +16,10 @@ public class Deck {
   public Card get(int i) {
     return this.cards.get(i);
   }
+
+  public void print() {
+    for (Card c : cards) {
+      c.print();
+    }
+  }
 }

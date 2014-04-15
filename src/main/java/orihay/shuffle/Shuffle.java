@@ -6,8 +6,24 @@ import java.util.Random;
 
 import orihay.cards.Card;
 import orihay.cards.Deck;
+import orihay.cards.Rank;
+import orihay.cards.Suit;
 
 public class Shuffle {
+  public static void main(String[] args) {
+    Card C1 = new Card(Suit.Clubs, Rank.Ace);
+    Card D2 = new Card(Suit.Diamonds, Rank.Two);
+    Card S10 = new Card(Suit.Spades, Rank.Ten);
+    Card H11 = new Card(Suit.Hearts, Rank.Jack);
+    Card S11 = new Card(Suit.Spades, Rank.Jack);
+    ArrayList<Card> list = new ArrayList<Card>();
+    list.add(C1);
+    list.add(D2);
+    list.add(S10);
+    list.add(H11);
+    list.add(S11);
+  }
+
   public static Deck withRand(Deck d, long seed) {
     List<Card> cards = d.getCards();
     Deck shuffled = null;
@@ -16,7 +32,7 @@ public class Shuffle {
     } else {
       shuffled = d;
     }
-    return d;
+    return shuffled;
   }
 
   private static List<Card> merge(List<Card> first, List<Card> second, long seed) {
