@@ -8,18 +8,39 @@ import orihay.cards.Card;
 import orihay.cards.Deck;
 
 public class Shuffle {
-
   public static Deck withRand(Deck d, long seed) {
     List<Card> cards = d.getCards();
+    Deck shuffled = null;
     if (cards.size() > 1) {
-      sort(cards, seed);
+      shuffled = new Deck(sort(cards, seed));
+    } else {
+      shuffled = d;
     }
-    merge(cards, seed);
     return d;
   }
 
   private static List<Card> merge(List<Card> first, List<Card> second, long seed) {
-
+    int oneSize = 0;
+    int twoSize = 0;
+    ArrayList<Card> merged = new ArrayList<Card>();
+    while (oneSize != first.size() && twoSize != second.size()) {
+      if (oneSize != first.size() || twoSize != second.size()) {
+        if (decide(seed)) {
+          merged.add(first.get(oneSize));
+          oneSize++;
+        } else {
+          merged.add(second.get(twoSize));
+          twoSize++;
+        }
+      } else if (oneSize == first.size()) {
+        merged.addAll(second.subList(twoSize, second.size() - 1));
+        twoSize = second.size();
+      } else {
+        merged.addAll(first.subList(oneSize, first.size() - 1));
+        oneSize = first.size();
+      }
+    }
+    return merged;
   }
 
   private static List<Card> sort(List<Card> cards, long seed) {
