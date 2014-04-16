@@ -84,7 +84,11 @@ public class Shuffle {
     } else {
       List<Card> first = cards.subList(0, floor);
       List<Card> second = cards.subList(floor, cards.size());
-      return merge(sort(first, rand), sort(second, rand), rand);
+      if (rand.nextBoolean()) {
+        return merge(sort(first, rand), sort(second, rand), rand);
+      } else {
+        return merge(sort(second, rand), sort(first, rand), rand);
+      }
     }
   }
 

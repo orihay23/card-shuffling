@@ -22,13 +22,19 @@ public class Main {
       }
     }
     Deck full = new Deck(cardList);
-    System.out.println("DECK:");
-    full.print();
-    Deck shuffled = Shuffle.withRand(full, new Random().nextLong());
+    // System.out.println("DECK:");
+    // full.print();
+    Random random = new Random();
+    Deck shuffled = Shuffle.withRand(full, random.nextLong());
+    int i = 0;
+    while (i < 1000) {
+      shuffled = Shuffle.withRand(shuffled, random.nextLong());
+      i++;
+    }
     System.out.println("SHUFFLED:");
     shuffled.print();
-    System.out.println("DECK UNMODIFIED:");
-    full.print();
+    // System.out.println("DECK UNMODIFIED:");
+    // full.print();
   }
 
 }
