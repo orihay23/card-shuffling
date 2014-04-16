@@ -25,23 +25,33 @@ public class Shuffle {
     Deck unshuffled = new Deck(list);
     System.out.println("Unshuffled:");
     unshuffled.print();
-    long seed = new Random().nextLong();
-    System.out.println("Shuffled");
-    withRand(unshuffled, seed).print();
+    Random random = new Random();
+    long seed = random.nextLong();
+    int i = 0;
+    while (i < 6) {
+      System.out.println("Shuffled");
+      withRand(unshuffled, seed).print();
+      seed = random.nextLong();
+      i++;
+    }
   }
 
   public static Deck withRand(Deck d, long seed) {
+    Random rand = new Random(seed);
     List<Card> cards = d.getCards();
     Deck shuffled = null;
     if (cards.size() > 1) {
-      shuffled = new Deck(sort(cards, seed));
+      shuffled = new Deck(sort(cards, rand));
     } else {
       shuffled = d;
     }
     return shuffled;
   }
 
-  private static List<Card> merge(List<Card> first, List<Card> second, long seed) {
+  private static List<Card> merge(
+      List<Card> first,
+      List<Card> second,
+      Random rand) {
     int oneSize = 0;
     int twoSize = 0;
     ArrayList<Card> merged = new ArrayList<Card>();
@@ -53,7 +63,7 @@ public class Shuffle {
         merged.addAll(first.subList(oneSize, first.size()));
         oneSize = first.size();
       } else {
-        if (decide(seed)) {
+        if (rand.nextBoolean()) {
           merged.add(first.get(oneSize));
           oneSize++;
         } else {
@@ -65,22 +75,22 @@ public class Shuffle {
     return merged;
   }
 
-  private static List<Card> sort(List<Card> cards, long seed) {
+  private static List<Card> sort(List<Card> cards, Random rand) {
     int floor = (int) Math.floor(cards.size() / 2);
     if (cards.size() == 2) {
-      return sortTwoCards(cards.get(0), cards.get(1), seed);
+      return sortTwoCards(cards.get(0), cards.get(1), rand);
     } else if (cards.size() == 1) {
       return cards;
     } else {
       List<Card> first = cards.subList(0, floor);
       List<Card> second = cards.subList(floor, cards.size());
-      return merge(sort(first, seed), sort(second, seed), seed);
+      return merge(sort(first, rand), sort(second, rand), rand);
     }
   }
 
-  private static List<Card> sortTwoCards(Card one, Card two, long seed) {
+  private static List<Card> sortTwoCards(Card one, Card two, Random rand) {
     ArrayList<Card> sorted = new ArrayList<Card>();
-    if (decide(seed)) {
+    if (rand.nextBoolean()) {
       sorted.add(one);
       sorted.add(two);
     } else {
@@ -88,10 +98,5 @@ public class Shuffle {
       sorted.add(one);
     }
     return sorted;
-  }
-
-  private static boolean decide(long seed) {
-    Random random = new Random(seed);
-    return random.nextBoolean();
   }
 }
